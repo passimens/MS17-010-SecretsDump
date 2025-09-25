@@ -4,6 +4,7 @@ from impacket import smb, smbconnection, smbserver
 from impacket.dcerpc.v5 import transport, scmr
 from struct import pack
 from threading import Thread
+import sys
 import os
 import cmd
 try:
@@ -134,7 +135,7 @@ class MYSMB(smb.SMB):
                 pipes = [ x.strip() for x in f.readlines()]
         except IOError as e:
             print("[-] Could not open {}, trying hardcoded values".format(pipes_file))
-            pipes = [ 'netlogon', 'lsarpc', 'samr', 'browser', 'spoolss', 'atsvc', 'DAV RPC SERVICE', 'epmapper', 'eventlog', 'InitShutdown', 'keysvc', 'lsass', 'LSM_API_service', 'ntsvcs', 'plugplay', 'protected_storage', 'router', 'SapiServerPipeS-1-5-5-0-70123', 'scerpc', 'srvsvc', 'tapsrv', 'trkwks', 'W32TIME_ALT', 'wkssvc','PIPE_EVENTROOT\CIMV2SCM EVENT PROVIDER', 'db2remotecmd' ]
+            pipes = [ 'netlogon', 'lsarpc', 'samr', 'browser', 'spoolss', 'atsvc', 'DAV RPC SERVICE', 'epmapper', 'eventlog', 'InitShutdown', 'keysvc', 'lsass', 'LSM_API_service', 'ntsvcs', 'plugplay', 'protected_storage', 'router', 'SapiServerPipeS-1-5-5-0-70123', 'scerpc', 'srvsvc', 'tapsrv', 'trkwks', 'W32TIME_ALT', 'wkssvc','PIPE_EVENTROOT\\CIMV2SCM EVENT PROVIDER', 'db2remotecmd' ]
         tid = self.tree_connect_andx('\\\\'+self.get_remote_host()+'\\'+'IPC$')
         found_pipes = []
         for pipe in pipes:
